@@ -13,32 +13,34 @@ import (
 func main(){
 
 	sourceUrl := flag.String("-u", "https://smarthosts.googlecode.com/svn/trunk/hosts", "The url where hosts content comes from")
-	targetAbsolutePath := "C://windows/system32/drivers/etc/hosts"
-	if runtime.GOOS == "linux" {
-		targetAbsolutePath = "/etc/hosts"
+	absolutePath := flag.String("-t", "C://windows/system32/drivers/etc/hosts", "The absolute path which locates the hosts file")
+    targetPath := *absolutePath
+    if runtime.GOOS == "linux" {
+		targetPath = "/etc/hosts"
 	}
-	fmt.Printf("%s\n", *sourceUrl)
+    fmt.Printf("sourceUrl: %s\n", *sourceUrl)
+    fmt.Printf("hostsPath: %s\n", targetPath)
 	resp, err := http.Get(*sourceUrl)
 	if err != nil {
-		fmt.Println("http.Get Error")
+        fmt.Println("Status: http.Get Error")
 		return
 	}
 
-	file, err := os.Create(targetAbsolutePath)
+	file, err := os.Create(targetPath)
 	if err != nil{
-		fmt.Println("os.Create Error")
+        fmt.Println("Status: os.Create Error")
 		return
 	}
 	defer resp.Body.Close()
 	defer file.Close()
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		fmt.Println("ioutil.ReadAll Error")
+        fmt.Println("Status: ioutil.ReadAll Error")
 		return
 	}
 	strBody := string(body)
 	strTime := time.Now().String()
 	strBody = "# " + strTime + "\n127.0.0.1\tkubuntu-dell\n" + strBody
 	file.WriteString(strBody)
-	fmt.Println("Update Successfully!")
+    fmt.Println("Status: Update Successfully!")
 }
