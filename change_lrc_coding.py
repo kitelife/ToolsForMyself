@@ -18,7 +18,7 @@ def changeCoding(path):
 				print coding
 				if coding == 'utf-8':
 					try:
-						content=unicode(content,coding).encode('gb2312')
+						content=unicode(content,coding).encode('gbk')
 						fp=open(filepath,'w')
 						fp.write(content)
 						fp.close()
