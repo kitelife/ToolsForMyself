@@ -13,7 +13,7 @@ import (
 func main() {
 
 	sourceUrl := flag.String("-u", "https://smarthosts.googlecode.com/svn/trunk/hosts", "The url where hosts content comes from")
-	absolutePath := flag.String("-t", "C://windows/system32/drivers/etc/hosts", "The absolute path which locates the hosts file")
+	absolutePath := flag.String("-t", "C:\\Windows\\System32\\drivers\\etc\\hosts", "The absolute path which locates the hosts file")
 	targetPath := *absolutePath
 	if runtime.GOOS == "linux" {
 		targetPath = "/etc/hosts"
@@ -43,4 +43,5 @@ func main() {
 	strBody = "# " + strTime + "\n127.0.0.1\tkubuntu-dell\n" + strBody
 	file.WriteString(strBody)
 	fmt.Println("Status: Update Successfully!")
+	time.Sleep(2 * time.Second)
 }
