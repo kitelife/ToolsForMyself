@@ -20,7 +20,6 @@ func getHostName()(hostname string) {
 }
 
 func main() {
-    fmt.Println(getHostName())
 	sourceUrl := flag.String("-u", "https://smarthosts.googlecode.com/svn/trunk/hosts", "The url where hosts content comes from")
 	absolutePath := flag.String("-t", "C:\\Windows\\System32\\drivers\\etc\\hosts", "The absolute path which locates the hosts file")
 	targetPath := *absolutePath
