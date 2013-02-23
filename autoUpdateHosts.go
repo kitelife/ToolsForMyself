@@ -10,8 +10,17 @@ import (
 	"time"
 )
 
-func main() {
+func getHostName()(hostname string) {
+    hostname, err := os.Hostname()
+    if err != nil {
+        fmt.Println("get hostname error!")
+        return ""
+    }
+    return hostname
+}
 
+func main() {
+    fmt.Println(getHostName())
 	sourceUrl := flag.String("-u", "https://smarthosts.googlecode.com/svn/trunk/hosts", "The url where hosts content comes from")
 	absolutePath := flag.String("-t", "C:\\Windows\\System32\\drivers\\etc\\hosts", "The absolute path which locates the hosts file")
 	targetPath := *absolutePath
@@ -40,7 +49,7 @@ func main() {
 	}
 	strBody := string(body)
 	strTime := time.Now().String()
-	strBody = "# " + strTime + "\n127.0.0.1\tkubuntu-dell\n" + strBody
+	strBody = "# " + strTime + "\n127.0.0.1\t" + getHostName() + "\n" + strBody
 	file.WriteString(strBody)
 	fmt.Println("Status: Update Successfully!")
 	time.Sleep(2 * time.Second)
