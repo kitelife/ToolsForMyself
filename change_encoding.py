@@ -15,7 +15,6 @@ def change_encoding(path, filetype, original_encoding, target_encoding):
                     content = fh.read()
                 det_result=chardet.detect(content)
                 encoding=det_result['encoding'].upper()
-                #print 'the original encoding of {0} is {1}'.format(filepath, encoding)
                 if encoding == original_encoding:
                     try:
                         content = content.decode(original_encoding).encode(target_encoding)
