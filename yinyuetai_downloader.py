@@ -37,17 +37,14 @@ class yinyuetai_downloader(object):
     def _parse_download_url(self):
         download_url_pattern = re.compile("hcVideoUrl\s*:\s*'(.+)'")
         download_url_list = download_url_pattern.findall(self.page_content)
-        if len(download_url_list) == 1:
-            self.download_url = download_url_list[0]
+        self.download_url = download_url_list[0]
         print self.download_url
 
         suffix = self.download_url.split('?')[0].split('.')[-1]
     
         video_title_pattern = re.compile("<h1\s*id=\"videoTitle\">(.+)</h1>")
         video_title_list = video_title_pattern.findall(self.page_content)
-        if len(video_title_list) == 1:
-            video_title = video_title_list[0]
-        video_title = video_title.replace(' ', '_')
+        video_title = video_title_list[0].replace(' ', '_')
     
         self.video_title = '{0}.{1}'.format(video_title.encode('utf-8'), suffix)
 
