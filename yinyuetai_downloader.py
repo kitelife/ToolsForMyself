@@ -44,7 +44,7 @@ class yinyuetai_downloader(object):
     
         video_title_pattern = re.compile("<h1\s*id=\"videoTitle\">(.+)</h1>")
         video_title_list = video_title_pattern.findall(self.page_content)
-        video_title = video_title_list[0].replace(' ', '_')
+        video_title = filter_special_char(video_title_list[0])
     
         self.video_title = '{0}.{1}'.format(video_title.encode('utf-8'), suffix)
 
@@ -63,10 +63,18 @@ class yinyuetai_downloader(object):
         self._download_video()
 
 
+def filter_special_char(some_str):
+    some_str = some_str.strip()
+    for punc in ['《', '》', '(', ')', '（', '）', '/', '&', ' ', '"', '\'', '#']:
+        some_str = some_str.replace(punc.decode('utf-8'), '_')
+    return some_str
+
+
 def main():
     page_url = sys.argv[1]
     mv_downloader = yinyuetai_downloader(page_url)
     mv_downloader.download_mv()
+
 
 if __name__ == '__main__':
     main()
